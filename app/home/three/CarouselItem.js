@@ -20,6 +20,7 @@ const CarouselItem = ({
   const [isCloseActive, setCloseActive] = useState(false)
   const { viewport } = useThree()
   const timeoutID = useRef()
+  const $text = useRef()
 
   useEffect(() => {
     if (activePlane === index) {
@@ -32,6 +33,7 @@ const CarouselItem = ({
 
   useEffect(() => {
     gsap.killTweensOf($root.current.position)
+
     gsap.to($root.current.position, {
       z: isActive ? 0 : -0.01,
       duration: 0.2,
@@ -80,20 +82,23 @@ const CarouselItem = ({
         active={isActive}
       />
 
+      <Text
+        color="white"
+        anchorX="center"
+        anchorY="center"
+        font="/fonts/Manrope-Regular.woff"
+        fontSize={viewport.width / 100}
+        position={[0, -height / 2 - 0.1, -0.05]}
+        maxWidth={viewport.width / 3}
+        ref={$text}
+      >
+        {item.title}
+      </Text>
+
       {isCloseActive ? (
         <mesh position={[0, 0, 0.01]} onClick={handleClose}>
           <planeGeometry args={[viewport.width, viewport.height]} />
           <meshBasicMaterial transparent={true} opacity={0} color={'red'} />
-          <Text
-            color="white"
-            anchorX="center"
-            anchorY="top"
-            fontSize={viewport.width / 100}
-            position={[0, startingPosition - offset, 1]}
-            maxWidth={viewport.width / 3}
-          >
-            Hello
-          </Text>
         </mesh>
       ) : null}
     </group>

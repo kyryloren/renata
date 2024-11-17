@@ -1,27 +1,27 @@
 const images = [
   {
     image: 'img/1.jpg',
-    title: 'Image Title',
+    title: 'Project One',
   },
   {
     image: 'img/2.jpg',
-    title: 'Image Title',
+    title: 'Project Two',
   },
   {
     image: 'img/3.jpg',
-    title: 'Image Title',
+    title: 'Project Three',
   },
   {
     image: 'img/4.jpg',
-    title: 'Image Title',
+    title: 'Project Four',
   },
   {
     image: 'img/5.jpg',
-    title: 'Image Title',
+    title: 'Project Five',
   },
   {
     image: 'img/6.jpg',
-    title: 'Image Title',
+    title: 'Project Six',
   },
 ]
 

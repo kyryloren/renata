@@ -12,6 +12,7 @@ import { Html } from '@react-three/drei'
 import TextElem from './TextElem'
 import * as THREE from 'three'
 import { easing } from 'maath'
+import { useGSAP } from '@gsap/react'
 
 const material = new THREE.LineBasicMaterial({ color: 'white' })
 const geometry = new THREE.BufferGeometry().setFromPoints([
@@ -46,6 +47,7 @@ const Carousel = () => {
   const $mapGroup = useRef()
 
   const [activePlane, setActivePlane] = useState(null)
+  const [hideText, setHideText] = useState(false)
   const prevActivePlane = usePrevious(activePlane)
   const { viewport } = useThree()
 
@@ -113,32 +115,13 @@ const Carousel = () => {
     }
 
     // Update the text position based on the progress
-    if ($textGroup.current) {
-      if (progress.current > 10) {
-        gsap.to(gsap.utils.toArray('.anim-word'), {
-          yPercent: 100,
-          stagger: 0.01,
-          duration: 1,
-        })
-        gsap.to(gsap.utils.toArray('.anim-link'), {
-          yPercent: 100,
-          stagger: 0.02,
-          duration: 1,
-        })
-        gsap.to('.anim-logo', { opacity: 0, duration: 1 })
-      } else {
-        gsap.to(gsap.utils.toArray('.anim-word'), {
-          yPercent: 0,
-          stagger: 0.01,
-          duration: 1,
-        })
-        gsap.to(gsap.utils.toArray('.anim-link'), {
-          yPercent: 0,
-          stagger: 0.02,
-          duration: 1,
-        })
-        gsap.to('.anim-logo', { opacity: 1, duration: 1 })
-      }
+
+    if (progress.current > 10) {
+      setHideText(true)
+    } else if (activePlane !== null) {
+      setHideText(true)
+    } else {
+      setHideText(false)
     }
   })
 
@@ -245,7 +228,7 @@ const Carousel = () => {
           style={{ top: '50%', left: 0, transform: 'translateY(-50%)' }}
           position={[0, 0, 0]}
         >
-          <TextElem />
+          <TextElem hideText={hideText} />
         </Html>
       </group>
     )

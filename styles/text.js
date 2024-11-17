@@ -7,7 +7,7 @@ export const Normal = css`
   // 16 > 16
   font-size: ${pxCutOff(16)};
   font-weight: 500;
-  line-height: 1.1;
+  line-height: 1.15;
 
   ${media.desktopL`font-size: 16px;`}
 `

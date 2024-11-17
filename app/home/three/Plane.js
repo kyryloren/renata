@@ -4,11 +4,20 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useThree } from '@react-three/fiber'
 import { useTexture } from '@react-three/drei'
 import gsap from 'gsap'
+import * as THREE from 'three'
 
 const Plane = ({ texture, width, height, active, ...props }) => {
   const $mesh = useRef()
-  const { viewport } = useThree()
+  const { viewport, gl } = useThree()
   const tex = useTexture(texture)
+
+  // Set texture encoding to sRGB to handle brightness correctly
+  tex.encoding = THREE.sRGBEncoding // Ensure the texture is in sRGB color space for proper brightness
+
+  // Set the renderer to use output encoding for proper gamma correction
+  useEffect(() => {
+    gl.outputEncoding = THREE.sRGBEncoding
+  }, [gl])
 
   useEffect(() => {
     if ($mesh.current.material) {
@@ -58,31 +67,35 @@ const Plane = ({ texture, width, height, active, ...props }) => {
         }
       `,
       fragmentShader: /* glsl */ `
-      uniform sampler2D uTex;
-      uniform vec2 uRes;
-      uniform vec2 uZoomScale;
-      uniform vec2 uImageRes;
+        uniform sampler2D uTex;
+        uniform vec2 uRes;
+        uniform vec2 uZoomScale;
+        uniform vec2 uImageRes;
 
-      /*------------------------------
-      Background Cover UV
-      --------------------------------
-      u = basic UV
-      s = screensize
-      i = image size
-      ------------------------------*/
-      vec2 CoverUV(vec2 u, vec2 s, vec2 i) {
-        float rs = s.x / s.y; // Aspect screen size
-        float ri = i.x / i.y; // Aspect image size
-        vec2 st = rs < ri ? vec2(i.x * s.y / i.y, s.y) : vec2(s.x, i.y * s.x / i.x); // New st
-        vec2 o = (rs < ri ? vec2((st.x - s.x) / 2.0, 0.0) : vec2(0.0, (st.y - s.y) / 2.0)) / st; // Offset
-        return u * s / st + o;
-      }
+        /*------------------------------
+        Background Cover UV
+        --------------------------------
+        u = basic UV
+        s = screensize
+        i = image size
+        ------------------------------*/
+        vec2 CoverUV(vec2 u, vec2 s, vec2 i) {
+          float rs = s.x / s.y; // Aspect screen size
+          float ri = i.x / i.y; // Aspect image size
+          vec2 st = rs < ri ? vec2(i.x * s.y / i.y, s.y) : vec2(s.x, i.y * s.x / i.x); // New st
+          vec2 o = (rs < ri ? vec2((st.x - s.x) / 2.0, 0.0) : vec2(0.0, (st.y - s.y) / 2.0)) / st; // Offset
+          return u * s / st + o;
+        }
 
-      varying vec2 vUv;
+        varying vec2 vUv;
         void main() {
           vec2 uv = CoverUV(vUv, uRes, uImageRes);
           vec3 tex = texture2D(uTex, uv).rgb;
-          gl_FragColor = vec4( tex, 1.0 );
+
+          // Apply gamma correction by converting from sRGB to linear space
+          tex = pow(tex, vec3(1.5)); // Corrects the perceived brightness of the texture
+
+          gl_FragColor = vec4(tex, 1.0);
         }
       `,
     }),

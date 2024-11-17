@@ -1,12 +1,10 @@
 'use client'
 
+import { useGSAP } from '@gsap/react'
 import { Logo } from 'components'
 import gsap from 'gsap'
-import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 import styled from 'styled-components'
 import { NormalText, normalTheme } from 'styles'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const SectionWrapper = styled.div`
   display: flex;
@@ -57,7 +55,38 @@ const Overflow = styled.span`
 
 const TEXT = `Multidisciplinary designer based in Brooklyn, NY pursuing a BFA in Communications Design at Pratt Institute. Focusing on branding andpreviously worked at dentsu.`
 
-const TextElem = () => {
+const TextElem = ({ hideText }) => {
+  useGSAP(() => {
+    console.log(hideText)
+    if (hideText) {
+      gsap.to(gsap.utils.toArray('.anim-word'), {
+        yPercent: 100,
+        stagger: 0.01,
+        duration: 1,
+      })
+      gsap.to(gsap.utils.toArray('.anim-link'), {
+        yPercent: 100,
+        stagger: 0.02,
+        duration: 1,
+      })
+      gsap.to('.anim-logo', { opacity: 0, duration: 1 })
+    } else {
+      gsap.to(gsap.utils.toArray('.anim-word'), {
+        yPercent: 0,
+        stagger: 0.01,
+        duration: 1,
+        delay: 0.5,
+      })
+      gsap.to(gsap.utils.toArray('.anim-link'), {
+        yPercent: 0,
+        stagger: 0.02,
+        duration: 1,
+        delay: 0.5,
+      })
+      gsap.to('.anim-logo', { opacity: 1, duration: 1, delay: 0.5 })
+    }
+  }, [hideText])
+
   return (
     <SectionWrapper className="anim-section">
       <LogoWrapper className="anim-logo">
