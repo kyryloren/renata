@@ -9,8 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106",
-    "next": "15.0.3"
+    "@cerner/duplicate-package-checker-webpack-plugin": "^2.6.0",
+    "@react-three/drei": "^9.117.0",
+    "@react-three/fiber": "^8.17.10",
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.16",
+    "next": "^14.2.16",
+    "react": "^18.2.0",
+    "react-dom": "^18.3.1",
+    "react-use": "^17.5.1",
+    "styled-components": "^6.1.13",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@next/bundle-analyzer": "^15.0.3",
+    "critters": "^0.0.25",
+    "prettier": "^3.3.3"
   }
 }
