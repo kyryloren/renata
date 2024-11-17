@@ -6,7 +6,7 @@ import { useTexture } from '@react-three/drei'
 import gsap from 'gsap'
 import * as THREE from 'three'
 
-const Plane = ({ texture, width, height, active, ...props }) => {
+const Plane = ({ texture, width, height, active, noAnim, ...props }) => {
   const $mesh = useRef()
   const { viewport, gl } = useThree()
   const tex = useTexture(texture)
@@ -27,14 +27,16 @@ const Plane = ({ texture, width, height, active, ...props }) => {
       $mesh.current.material.uniforms.uZoomScale.value.y =
         viewport.height / height
 
-      gsap.to($mesh.current.material.uniforms.uProgress, {
-        value: active ? 1 : 0,
-      })
+      if (!noAnim) {
+        gsap.to($mesh.current.material.uniforms.uProgress, {
+          value: active ? 1 : 0,
+        })
 
-      gsap.to($mesh.current.material.uniforms.uRes.value, {
-        x: active ? viewport.width : width,
-        y: active ? viewport.height : height,
-      })
+        gsap.to($mesh.current.material.uniforms.uRes.value, {
+          x: active ? viewport.width : width,
+          y: active ? viewport.height : height,
+        })
+      }
     }
   }, [viewport, active])
 
@@ -44,7 +46,7 @@ const Plane = ({ texture, width, height, active, ...props }) => {
         uProgress: { value: 0 },
         uZoomScale: { value: { x: 1, y: 1 } },
         uTex: { value: tex },
-        uRes: { value: { x: 1, y: 1 } },
+        uRes: { value: { x: width, y: height } },
         uImageRes: {
           value: { x: tex.source.data.width, y: tex.source.data.height },
         },
@@ -93,7 +95,7 @@ const Plane = ({ texture, width, height, active, ...props }) => {
           vec3 tex = texture2D(uTex, uv).rgb;
 
           // Apply gamma correction by converting from sRGB to linear space
-          tex = pow(tex, vec3(1.5)); // Corrects the perceived brightness of the texture
+          tex = pow(tex, vec3(1.6)); // Corrects the perceived brightness of the texture
 
           gl_FragColor = vec4(tex, 1.0);
         }

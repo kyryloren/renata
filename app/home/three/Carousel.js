@@ -12,7 +12,7 @@ import { Html } from '@react-three/drei'
 import TextElem from './TextElem'
 import * as THREE from 'three'
 import { easing } from 'maath'
-import { useGSAP } from '@gsap/react'
+import { useRouter } from 'next/navigation'
 
 const material = new THREE.LineBasicMaterial({ color: 'white' })
 const geometry = new THREE.BufferGeometry().setFromPoints([
@@ -45,6 +45,7 @@ const Carousel = () => {
   const $post = useRef()
   const $textGroup = useRef() // Reference for the text group
   const $mapGroup = useRef()
+  const router = useRouter()
 
   const [activePlane, setActivePlane] = useState(null)
   const [hideText, setHideText] = useState(false)
@@ -75,6 +76,14 @@ const Carousel = () => {
       y: $items.length * -0.1 + piramidalIndex * 0.1,
     })
   }
+
+  useEffect(() => {
+    if (activePlane != null) {
+      setTimeout(() => {
+        router.push('/six')
+      }, 2000)
+    }
+  }, [activePlane])
 
   /*--------------------
   RAF

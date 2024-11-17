@@ -17,7 +17,7 @@ const PostProcessing = forwardRef((_, ref) => {
       <MeshTransmissionMaterial
         ref={ref}
         background={new Color('black')}
-        transmission={0.7}
+        transmission={1}
         roughness={0}
         thickness={0}
         chromaticAberration={0.06}

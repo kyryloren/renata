@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     font-family: var(--font);
     background: ${({ theme }) => `rgb(${theme.body})`};
-    color: ${({ theme }) => `rgb(${theme.text})`};
+    color: ${({ theme }) => `rgb(${theme.white})`};
     overscroll-behavior-y: none;
     animation: ${gradient} 15s ease infinite;
   }

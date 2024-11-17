@@ -57,7 +57,6 @@ const TEXT = `Multidisciplinary designer based in Brooklyn, NY pursuing a BFA in
 
 const TextElem = ({ hideText }) => {
   useGSAP(() => {
-    console.log(hideText)
     if (hideText) {
       gsap.to(gsap.utils.toArray('.anim-word'), {
         yPercent: 100,
