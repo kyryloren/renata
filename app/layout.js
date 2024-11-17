@@ -1,11 +1,12 @@
 import { StyledComponentsRegistry } from 'lib'
+import { manrope } from 'styles'
 
 const title = 'Renata Dominguez'
 const description = ``
 
 export const metadata = {
   title: {
-    template: '%s | Outer Labs',
+    template: '%s | Renata Dominguez',
     default: title,
   },
   description: description,
@@ -43,7 +44,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en-US">
+    <html lang="en-US" className={manrope.className}>
       <head>
         <link rel="stylesheet" href="https://use.typekit.net/lrk0fqe.css" />
 

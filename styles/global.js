@@ -43,10 +43,8 @@ const GlobalStyle = createGlobalStyle`
     font-variant-ligatures: common-ligatures;
     text-rendering: optimizelegibility;
     overflow-x: hidden;
-    font-family: 'articulat-cf','San Francisco','SF Pro Text',-apple-system,system-ui,sans-serif;
-    background: linear-gradient(270deg, #f5e4ff, #E5DFFF, #d4cbff, #fffbfb);
-    background-size: 800% 800%;
-    background-color: rgb(255,251,251);
+    font-family: var(--font);
+    background: ${({ theme }) => `rgb(${theme.body})`};
     color: ${({ theme }) => `rgb(${theme.text})`};
     overscroll-behavior-y: none;
     animation: ${gradient} 15s ease infinite;

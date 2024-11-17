@@ -23,6 +23,7 @@ export {
 } from './text'
 export { default as SectionWrapper } from './section'
 export { default as Z_INDEX } from './z'
+export { default as manrope } from './fonts'
 export {
   ContainerPaddingLeft,
   ContainerPaddingRight,
