@@ -1,9 +1,7 @@
+import HomePage from './home'
+
 async function Home() {
-  return (
-    <>
-      <h1>hello</h1>
-    </>
-  )
+  return <HomePage />
 }
 
 export default Home

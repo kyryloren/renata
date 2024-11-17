@@ -22,7 +22,7 @@ const ScrollbarWrapper = styled.div`
   .thumb {
     min-height: 80px;
     width: 8px;
-    background-color: ${({ theme }) => `rgb(${theme.accent2})`};
+    background-color: ${({ theme }) => `rgb(${theme.gray})`};
     position: absolute;
     right: 0;
     border-radius: 10px;
